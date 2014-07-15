@@ -1,12 +1,16 @@
 var express = require('express'),
+    bodyParser = require('body-parser'),
     bandService = require('./server/routes'),
-    app = express();
+    app = express(),
+    logger =  require('morgan');
 
-app.configure(function() {
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
+  app.use(logger('dev'));
+
+//app.configure(function() {
+  //app.use(express.logger('dev'));
+  app.use(bodyParser());
   app.use(express.static(__dirname + '/app'));
-});
+//});
 
 app.get('/bands', bandService.findAllBands);
 app.get('/bands/:id', bandService.findBandById);
